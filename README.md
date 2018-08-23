@@ -1,3 +1,3 @@
 # Comphys
 Fys4150
-Hello
+Hello Kristian, how are you?
