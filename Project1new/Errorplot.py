@@ -2,13 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numpy import exp,log10
 
-#Pretty figures
-params = {'legend.fontsize': 'large',
-          'axes.labelsize': 'large',
-          'axes.titlesize': 'large',
-          'xtick.labelsize': 'large',
-          'ytick.labelsize': 'large'}
-plt.rcParams.update(params)
 
 "Analytical solution"
 def u(x):
@@ -29,6 +22,7 @@ def plotter_results(n,x_numerical,v_numerical,title):
     plt.gca().set_ylabel('$u(x)$')
     plt.gca().set_title(title)
     plt.legend(loc='best')
+    plt.savefig("Solution_n100.png")
     plt.show()
 
 def plotter_error(n,h_step,error,title):
@@ -38,6 +32,7 @@ def plotter_error(n,h_step,error,title):
     plt.gca().set_ylabel('$log{\epsilon}$')
     plt.gca().set_title(title)
     plt.legend(loc='best')
+    plt.savefig("Errorplot.png")
     plt.show()
 
 
@@ -53,8 +48,8 @@ h_step=(data2[:,1])
 
 n=10
 
-plotter_results(n,x_numerical,v1,'General Algorithm')
+#plotter_results(n,x_numerical,v1,'General Algorithm')
 plotter_results(n,x_numerical,v2,'Optimized Algorithm')
-plotter_results(n,x_numerical,v3,'LU Decomposition')
+#plotter_results(n,x_numerical,v3,'LU Decomposition')
 
-plotter_error(n,h_step,error,'loglog plot of relative error as a function of stepsize')
+#plotter_error(n,h_step,error,'loglog plot of relative error as a function of stepsize')
