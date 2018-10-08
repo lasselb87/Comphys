@@ -8,8 +8,9 @@
 using namespace std;
 using namespace arma;
 
+double scale=4*M_PI*M_PI
 //===================================================================
-//Begin acceleration function
+//Begin Newton force
 //-------------------------------------------------------------------
 // Function that defines the acceleration
 // G - Gravitational constant
@@ -22,10 +23,10 @@ vec acceleration(vec pos)
   double G=1.0;
   double M_sun=1.0;
   double r_cube=pow(norm(pos),3);
-  return -30*G*M_sun*(pos)/(r_cube);
+  return -scale*G*M_sun*(pos)/(r_cube);
 
 }
-//End acceleration function
+//End Newton force
 
 
 //===================================================================
@@ -80,8 +81,8 @@ void velverlet_method(mat &pos, mat &vel, vec acc(vec), double dt, int N)
 //-------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-  double T=100; //atof(argv[1]);
-  double dt= 0.001;//atof(argv[2]);
+  double T = atof(argv[1]);
+  double dt = atof(argv[2]);
   int N= int(T/dt);
 
   mat pos(3,N,fill::zeros);
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
     myfile << vel.col(i)(0)<< " " << vel.col(i)(1)<< " "  << vel.col(i)(2);
     myfile << endl;
   }
-  system("python TwoPlanets_plot.py");
+
   myfile.close();
 
   return 0;

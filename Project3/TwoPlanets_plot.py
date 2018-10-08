@@ -9,11 +9,9 @@ params = {'legend.fontsize': 'large',
           'ytick.labelsize': 'large'}
 plt.rcParams.update(params)
 
-data=("Data_Earth.txt")
-
-x=np.loadtxt(data,usecols=0)
-y=np.loadtxt(data,usecols=1)
-#z=np.loadtxt(data,usecols=2)
+data=np.loadtxt("Data_Earth.txt")
+x=data[:,0]
+y=data[:,1]
 
 plt.plot(x,y,'r')
 plt.show()

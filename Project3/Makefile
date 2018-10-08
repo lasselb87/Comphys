@@ -14,7 +14,8 @@ all: $(TARGETS)
 TwoPlanets: TwoPlanets.o
 	${CPPflags} -o TwoPlanets.x TwoPlanets.cpp ${LIB}
 	rm -f *.o
-	./TwoPlanets.x
+	./TwoPlanets.x 10 0.001
 	python TwoPlanets_plot.py
+
 clean:
 	rm -f *.o *.txt *.x
