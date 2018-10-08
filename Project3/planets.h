@@ -1,6 +1,6 @@
 // Include guard
-#ifndef __JACOBI_H_INCLUDED__
-#define __JACOBI_H_INCLUDED__
+#ifndef planet_h
+#define planet_h
 
 // Included dependencies
 #include <iostream>
@@ -10,8 +10,14 @@
 using namespace  std;
 using namespace  arma;
 
-//Callings
-class planet()
+class Planet
+{
+public:
+  vec pos;
+  vec vel;
+  double M;
+  Planet(){}
+  Planet(vec position, vec velocity, double m)
+};
 
-
-#endif // __JACOBI_H_INCLUDED__
+#endif // planet_h
