@@ -3,12 +3,15 @@
 #include <cmath>
 #include <fstream>
 #include <iomanip>
+#include <iterator>
+#include <string>
+#include <vector>
 #include <chrono>
 #include <stdio.h>
 using namespace std;
 using namespace arma;
 
-double scale=4*M_PI*M_PI
+double scale=4*M_PI*M_PI;
 //===================================================================
 //Begin Newton force
 //-------------------------------------------------------------------
@@ -85,8 +88,9 @@ int main(int argc, char *argv[])
   double dt = atof(argv[2]);
   int N= int(T/dt);
 
-  mat pos(3,N,fill::zeros);
-  mat vel(3,N,fill::zeros);
+  mat pos(3,N,fill::zeros); //pos.col(0) = vec({1,0,0});
+  mat vel(3,N,fill::zeros); //vel.col(0) = vec({0,2M_PI,0});
+
   pos(0)=1.0; pos(1)=0.0; pos(2)=0.0;
   vel(0)=0.0; vel(1)=2*M_PI; vel(2)=0.0;
   //Euler_method(pos,vel,acceleration,dt,N);

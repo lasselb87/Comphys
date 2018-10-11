@@ -6,6 +6,10 @@
 #include <iostream>
 #include <cmath>
 #include <armadillo>
+#include <iterator>
+#include <string>
+#include <vector>
+#include "planets.h"
 
 
 using namespace  std;
@@ -26,21 +30,21 @@ using namespace  arma;
 // in one column. There are then one planet in each column
 //-------------------------------------------------------------------
 
-class Solver()
+class Solver
 {
 private:
   vec t;
   cube pos;
   cube vel;
-  vector<planet> planets;
+  vector<Planet> planets;
   int numPlanets;
   int N;
 
-  void totalAcceleration(vec forceType, mat &totAcc,int i)
+  void totalAcceleration(vec forceType(vec,vec), mat &totAcc,int i);
 
 public:
-  Solver(vector<Planet> p, int n)
-  void verlet(vec acceleration(vec), double T, double dt)
+  Solver(vector<Planet> p, int n);
+  void verlet(vec acc(vec,vec), double T, double dt);
   void writetofile(string filename);
 };
 

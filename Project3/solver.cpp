@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <armadillo>
 #include <fstream>
+#include <iterator>
+#include <string>
 #include <vector>
 #include "solver.h"
 using namespace std;
@@ -11,17 +13,17 @@ using namespace arma;
 //-------------------------------------------------------------------
 // Making Solver member function totalAcceleration
 //-------------------------------------------------------------------
-void Solver::totalAcceleration(vec forceType, mat &totalAcc, int i)
+void Solver::totalAcceleration(vec forceType(vec,vec), mat &totalAcc, int i)
 {
   totalAcc=zeros(3,numPlanets);
   for(int j=0; j<numPlanets;j++)
   {
-    totalAcc(j) += forceType(pos.slice(i).col(j));
+    totalAcc.col(j) += forceType(pos.slice(i).col(j),vel.slice(i).col(j));
     for(int k=j+1; k<numPlanets; k++)
     {
-      mat temp=forceType(pos.slice(i).col(j)-pos.slice(i).col(k));
-      totalAcc(j) += planets[k].M*temp;
-      totalAcc(k) -= planets[j].M*temp;
+      mat temp=forceType(pos.slice(i).col(j)-pos.slice(i).col(k),vel.slice(i).col(k));
+      totalAcc.col(j) += planets[k].M*temp;
+      totalAcc.col(k) -= planets[j].M*temp;
     }
   }
 }
@@ -39,7 +41,7 @@ Solver::Solver(vector<Planet> p, int n)
 //-------------------------------------------------------------------
 // Making Solver member function verlet
 //-------------------------------------------------------------------
-void Solver::verlet(vec acceleration(vec), double T, double dt)
+void Solver::verlet(vec acceleration(vec,vec), double T, double dt)
 {
   N = int(T/dt);
   pos = zeros(3, numPlanets, N);
@@ -50,13 +52,13 @@ void Solver::verlet(vec acceleration(vec), double T, double dt)
     vel.slice(0).col(i) = planets[i].vel;
   }
   mat totalAcc = zeros(3, numPlanets);
-  mat prevAcc = zeros(3, numplanets);
-  totalAcceleration(forceType, totalAcc, 0);
+  mat prevAcc = zeros(3, numPlanets);
+  totalAcceleration(acceleration, totalAcc, 0);
   for(int i=0; i<N-1; i++)
   {
-    pos.slice(i+1) = pos.slice(i) + vel.slicce(i)*dt + 0.5*totalAcc*dt*dt;
+    pos.slice(i+1) = pos.slice(i) + vel.slice(i)*dt + 0.5*totalAcc*dt*dt;
     prevAcc = totalAcc;
-    totalAcceleration(forceType, totalAcc, i+1);
+    totalAcceleration(acceleration, totalAcc, i+1);
     vel.slice(i+1) = vel.slice(i) + 0.5*(totalAcc+prevAcc)*dt;
   }
 }
@@ -72,14 +74,15 @@ void Solver::writetofile(string filename)
   {
     for(int j=0;j<numPlanets;j++)
     {
-      myfile << pos.slice(i).col(j)(0) << " "
-             << pos.slice(i).col(j)(1) << " "
-             << pos.slice(i).col(j)(2) << " "
-             << vel.slice(i).col(j)(0) << " "
+      myfile << pos.slice(i).col(j)(0) << " " " "
+             << pos.slice(i).col(j)(1) << " " " "
+             << pos.slice(i).col(j)(2) << " " " "
+
+             << vel.slice(i).col(j)(0) << " " 
              << vel.slice(i).col(j)(1) << " "
              << vel.slice(i).col(j)(2) << " ";
     }
     myfile<<endl;
   }
-  myfile.close()
+  myfile.close();
 }

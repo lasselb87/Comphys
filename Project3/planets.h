@@ -6,6 +6,9 @@
 #include <iostream>
 #include <cmath>
 #include <armadillo>
+#include <iterator>
+#include <string>
+#include <vector>
 
 using namespace  std;
 using namespace  arma;
@@ -16,8 +19,8 @@ public:
   vec pos;
   vec vel;
   double M;
-  Planet(){}
-  Planet(vec position, vec velocity, double m)
+  Planet();
+  Planet(vec position, vec velocity, double m);
 };
 
 #endif // planet_h
